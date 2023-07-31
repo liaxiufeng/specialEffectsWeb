@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: black;
+            transform-style: preserve-3d;
+            perspective: 1050px;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        #drag-container {
+            position: relative;
+            transform-style: preserve-3d;
+            animation: spin 80s linear infinite;
+        }
+
+        #spin-container {
+            position: relative;
+            z-index: 10;
+            transform-style: preserve-3d;
+        }
+
+        .spin-item {
+            position: absolute;
+            transform-style: preserve-3d;
+        }
+
+        .spin-item>img{
+            box-shadow: 0 0 2px #fff;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotateY(0deg);
+            }
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="drag-container">
+    <div id="spin-container" ></div>
+</div>
+<script>
+    function getRandomSrc() {
+        const srcs = [
+            '../images/woman1.webp',
+            '../images/woman2.webp',
+            '../images/woman3.jpeg',
+            '../images/woman4.jpeg',
+            '../images/woman5.jpeg',
+            '../images/woman6.jpeg',
+        ]
+        return srcs[Math.floor(Math.random() * srcs.length)]
+    }
+    class point {
+        //上到右的角度
+        rightBottom = 0;
+        //右到后的角度
+        frontRight = 0;
+        //宽度px
+        width = 0;
+        //高度px
+        height = 0;
+        //半径
+        radius = 0
+        constructor(frontRight , rightBottom ,width , height, radius) {
+            this.frontRight = frontRight;
+            this.rightBottom = rightBottom;
+            this.width = width;
+            this.height = height;
+            this.radius = radius;
+        }
+
+        get element(){
+            const pointElement = document.createElement('div')
+            pointElement.className = 'spin-item'
+            pointElement.setAttribute('style', `transform: rotateY(${this.frontRight - 90}deg) rotateZ(${this.rightBottom - 90}deg) translateX(${this.radius}px);width: ${this.width}px;height: ${this.height}px;`)
+            const pointChildElement = document.createElement('img')
+            pointChildElement.setAttribute('src', getRandomSrc())
+            pointChildElement.setAttribute('style', `transform: rotateY(90deg);width: ${this.width}px;height: ${this.height}px;`)
+            pointElement.appendChild(pointChildElement)
+            return pointElement
+        }
+    }
+
+    class earth {
+        //最大维度数量
+        maxRow = 30;
+        //最大经度数量
+        maxCol = 30;
+        //半径
+        radius = 800;
+        //宽度px
+        width = 40;
+        //高度px
+        height = 40;
+        constructor() {
+            const eachCol = 360.0 / this.maxCol
+            const eachRow = 180.0 / this.maxRow
+            const container = document.getElementById('spin-container')
+            container.style.width = this.width + 'px'
+            container.style.height = this.height + 'px'
+            for (let i = 1; i < this.maxRow + 1; i++) {
+                for (let j = 1; j < this.maxCol + 1; j++) {
+                    const p = new point(eachCol * j, eachRow * (i - 0.5), this.width, this.height, this.radius)
+                    const pointElement = p.element;
+                    container.appendChild(pointElement)
+                }
+            }
+        }
+    }
+
+    new earth()
+</script>
+</body>
+</html>

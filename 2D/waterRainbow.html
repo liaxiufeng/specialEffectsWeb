@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>标题</title>
+    <style>
+        html {
+            font-size: .8vw;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .bg {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            --size-c: 40vw;
+            width: var(--size-c);
+            height: var(--size-c);
+            overflow: hidden;
+            filter: contrast(30);
+        }
+
+        .drop {
+            width: calc(var(--size-c) * 0.3);
+            height: calc(var(--size-c) * 0.3);
+            border-radius: 50%;
+            flex-direction: column;
+            position: absolute;
+            filter: blur(20px);
+            opacity: 0;
+        }
+
+        .drop {
+            animation-duration: 6s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        .top {
+            animation-name: drop_top;
+        }
+
+        .bottom {
+            animation-name: drop_bottom;
+        }
+
+        .left {
+            animation-name: drop_left;
+        }
+
+        .right {
+            animation-name: drop_right;
+        }
+
+        .top:nth-child(1) {
+            animation-delay: 0s;
+            background-color: #FF0000;
+        }
+
+        .top:nth-child(2) {
+            animation-delay: .7s;
+            background-color: #00FFFF;
+        }
+
+        .bottom:nth-child(3) {
+            animation-delay: .2s;
+            background-color: #FFFF00;
+        }
+
+        .bottom:nth-child(4) {
+            animation-delay: .9s;
+            background-color: #8B00FF;
+        }
+
+        .left:nth-child(5) {
+            animation-delay: .4s;
+            background-color: #00FF00;
+        }
+
+        .left:nth-child(6) {
+            animation-delay: 1.1s;
+            background-color: #FF7F00;
+        }
+
+
+        .right:nth-child(7) {
+            animation-delay: .6s;
+            background-color: #0000FF;
+        }
+
+        .right:nth-child(8) {
+            animation-delay: 1.3s;
+            background-color: #FF0000;
+        }
+
+
+        .collection {
+            position: relative;
+            width: calc(var(--size-c) * 0.33);
+            height: calc(var(--size-c) * 0.33);
+            background-color: #fff;
+            border-radius: 50%;
+            filter: blur(20px);
+            cursor: pointer;
+        }
+
+        .collection {
+            animation: collection 6s ease-in-out infinite;
+            animation-delay: 1.2s;
+        }
+
+        .container span {
+            font-size: 2.8rem;
+            font-family: Comic Sans MS;
+            position: absolute;
+            cursor: pointer;
+        }
+
+        @keyframes collection {
+            0% {
+                transform: scale(1) rotate(0deg);
+            }
+            22% {
+                transform: scale(1.3) rotate(120deg);
+                width: calc(var(--size-c) * 0.3);
+                border-top-left-radius: 40%;
+                border-bottom-left-radius: 45%;
+            }
+            44% {
+                transform: scale(1.2) rotate(240deg);
+                border-top-left-radius: 45%;
+                border-bottom-left-radius: 48%;
+            }
+
+            66% {
+                transform: scale(1) rotate(360deg);
+                border-radius: 50%;
+            }
+        }
+
+        @keyframes drop_top {
+            0% {
+                transform: scale(.7) translateY(-400%);
+                opacity: 0;
+            }
+            33% {
+                transform: scale(.4) translateY(-80%);
+                opacity: 1;
+            }
+            66% {
+                transform: scale(.3) translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(.3) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes drop_bottom {
+            0% {
+                transform: scale(.7) translateY(400%);
+                opacity: 0;
+            }
+            33% {
+                transform: scale(.4) translateY(80%);
+                opacity: 1;
+            }
+            66% {
+                transform: scale(.3) translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(.3) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes drop_left {
+            0% {
+                transform: scale(.7) translateX(-400%);
+                opacity: 0;
+            }
+            33% {
+                transform: scale(.4) translateX(-80%);
+                opacity: 1;
+            }
+            66% {
+                transform: scale(.3) translateX(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(.3) translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes drop_right {
+            0% {
+                transform: scale(.7) translateX(400%);
+                opacity: 0;
+            }
+            33% {
+                transform: scale(.4) translateX(80%);
+                opacity: 1;
+            }
+            66% {
+                transform: scale(.3) translateX(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(.3) translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .provider_sign {
+            color: white;
+            position: absolute;
+            width: 100vw;
+            bottom: 10px;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div class="bg">
+    <div class="container">
+        <div class="drop top"></div>
+        <div class="drop top"></div>
+        <div class="drop bottom"></div>
+        <div class="drop bottom"></div>
+        <div class="drop left"></div>
+        <div class="drop left"></div>
+        <div class="drop right"></div>
+        <div class="drop right"></div>
+        <div class="collection"></div>
+        <span>start</span>
+    </div>
+    <a class="provider_sign" href="https://beian.miit.gov.cn/" target="_blank">备案号: 渝ICP备2021001683号-5</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            background: black;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="300" height="300"></canvas>
+<script>
+
+    class Star {
+        get maxHeight() {
+            return window.innerHeight
+        }
+
+        get maxWidth() {
+            return window.innerWidth
+        }
+
+        maxDistance = 100
+
+        //颜色汇总
+        colorArray = [
+            '#FF0000',
+            '#FF7F00',
+            '#FFFF00',
+            '#00FF00',
+            '#00FFFF',
+            '#0000FF',
+            '#8B00FF',
+        ]
+
+        //最大速度
+        maxSpeed = 0.2
+
+        //半径
+        radius = 3
+
+        context = {}
+        color = ''
+
+        constructor(context) {
+            this.context = context
+            const [x, y] = this.randomPosition()
+            this.x = x
+            this.y = y
+            const [dx, dy] = this.randomSpeed()
+            this.dx = dx
+            this.dy = dy
+            this.color = this.colorArray[Math.floor(Math.random() * this.colorArray.length)]
+        }
+
+        randomPosition() {
+            return [Math.random() * this.maxWidth, Math.random() * this.maxHeight]
+        }
+
+        randomSpeed() {
+            return [(Math.random() - 0.5) * 2 * this.maxSpeed, (Math.random() - 0.5) * 2 * this.maxSpeed]
+        }
+
+        draw() {
+            this.context.beginPath()
+            this.context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+            this.context.fillStyle = this.color
+            this.context.fill()
+        }
+
+        move() {
+            const xTarget = this.x + this.dx
+            const yTarget = this.y + this.dy
+            if (xTarget > this.maxWidth || xTarget < 0) {
+                this.dx = -this.dx
+            }
+            if (yTarget > this.maxHeight || yTarget < 0) {
+                this.dy = -this.dy
+            }
+            this.x += this.dx
+            this.y += this.dy
+            this.draw()
+        }
+
+        lineTo(star) {
+            const distance = Math.sqrt(Math.pow(this.x - star.x, 2) + Math.pow(this.y - star.y, 2))
+            if (distance > this.maxDistance || distance <= this.radius * 2) {
+                return
+            }
+            const grd = this.context.createLinearGradient(this.x, this.y, star.x, star.y)
+            grd.addColorStop(0, this.color)
+            grd.addColorStop(1, star.color)
+            this.context.strokeStyle = grd
+            this.context.lineWidth = 1 - distance / this.maxDistance
+            this.context.beginPath()
+            this.context.moveTo(this.x, this.y)
+            this.context.lineTo(star.x, star.y)
+            this.context.stroke()
+        }
+    }
+
+    class Sky {
+        stars = []
+        starsNumber = 300
+        context = {}
+
+        constructor(canvasElement) {
+            window.onresize = () => {
+                this.init(canvasElement)
+            }
+            this.init(canvasElement)
+        }
+
+        init(canvasElement){
+            canvasElement.width = window.innerWidth
+            canvasElement.height = window.innerHeight
+            this.stars = []
+            this.context = canvasElement.getContext('2d')
+            for (let i = 0; i < this.starsNumber; i++) {
+                this.add(new Star(this.context))
+            }
+        }
+
+        add(star) {
+            this.stars.push(star)
+        }
+
+        draw() {
+            this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height)
+            this.stars.forEach(star => star.draw())
+            this.stars.forEach(source => {
+                this.stars.forEach(target => source.lineTo(target))
+            })
+        }
+
+        move() {
+            this.stars.forEach(star => star.move())
+        }
+
+        run() {
+            this.move()
+            this.draw()
+            requestAnimationFrame(this.run.bind(this))
+        }
+
+        delete(star) {
+            this.stars = this.stars.filter(item => item !== star)
+        }
+    }
+
+    new Sky(document.getElementById('canvas')).run()
+
+</script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+:root {
+    font-size: .8vw;
+    --ball-width: 20vw;
+    --ball-min-width: 240px;
+    --ball-half-min-width: calc(var(--ball-min-width) / 2);
+    --ball-half-width: calc(var(--ball-width) / 2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+body{
+    overflow: hidden;
+}
+
+#container {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#init_container{
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+}
+
+.name {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    font-size: 40px;
+    font-weight: 700;
+    font-family: Comic Sans MS;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.name .descriptions{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: initial;
+    cursor: pointer;
+    user-select: none;
+    height: var(--ball-width);
+    width: var(--ball-width);
+    border-radius: 50%;
+    margin: auto 0;
+}
+
+.descriptions:hover>div{
+    color: #000;
+}
+
+.ball:hover + .name {
+    color: #000;
+}
+
+.descriptions>div:hover{
+    font-size: 50px;
+    color: transparent;
+}
+
+.rainbow {
+    background-image: linear-gradient(135deg, #53f3c2, #73b6e8, #fcbf31, #f65e3e, #fcbf31, #53f3c2, #73b6e8);
+    background-size: 300vw 100vh;
+    background-repeat: repeat;
+    background-blend-mode: color-burn;
+    animation: rainbow 20s linear infinite;
+}
+
+@keyframes rainbow {
+    0% {
+        background-position-x: 0;
+    }
+    100% {
+        background-position-x: -300vw;
+    }
+}
+
+.provider_sign {
+    color: white;
+    position: fixed;
+    width: 100vw;
+    bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.ball {
+    min-width: var(--ball-half-min-width);
+    min-height: var(--ball-half-min-width);
+    height: var(--ball-half-width);
+    width: var(--ball-half-width);
+    background-color: #fff;
+    position: fixed;
+}
+
+.ball_left_top {
+    right: 50vw;
+    bottom: 50vh;
+    border-radius: 100% 0 0 0;
+}
+
+.ball_right_top {
+    left: 50vw;
+    bottom: 50vh;
+    border-radius: 0 100% 0 0;
+}
+
+.ball_left_bottom {
+    right: 50vw;
+    top: 50vh;
+    border-radius: 0 0 0 100%;
+}
+
+.ball_right_bottom {
+    left: 50vw;
+    top: 50vh;
+    border-radius: 0 0 100% 0;
+}

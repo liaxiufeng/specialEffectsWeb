@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>智慧星球</title>
+    <link rel="shortcut icon" href="./static/images/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./static/css/index_init.css"/>
+    <style>
+        #init_container.die {
+            pointer-events: none;
+            cursor: none;
+        }
+
+        #init_container.die .name .descriptions {
+            pointer-events: none;
+            cursor: none;
+        }
+
+        #init_container.die .name {
+            animation: die_name 1s forwards;
+        }
+
+        @keyframes die_name {
+            50% {
+                color: #ffffff;
+                opacity: 0;
+                background-color: transparent;
+                top: 0;
+                left: 0;
+            }
+            100% {
+                color: #ffffff;
+                opacity: 0;
+                top: -50vw;
+                left: -50vw;
+            }
+        }
+
+        #init_container.die .ball {
+            animation-delay: .2s;
+            animation-duration: 6s;
+            animation-fill-mode: forwards;
+            animation-timing-function: ease-out;
+        }
+
+        #init_container.die .ball_left_top {
+            animation-name: die_ball_left_top;
+        }
+
+        #init_container.die .ball_right_top {
+            animation-name: die_ball_left_top;
+        }
+
+        #init_container.die .ball_left_bottom {
+            animation-name: die_ball_left_top;
+        }
+
+        #init_container.die .ball_right_bottom {
+            animation-name: die_ball_left_top;
+        }
+
+        @keyframes die_ball_left_top {
+            100% {
+                right: 100vw;
+                bottom: 100vh;
+                transform: scale(.3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes die_ball_right_top {
+            100% {
+                left: 100vw;
+                bottom: 100vh;
+                transform: scale(.3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes die_ball_left_bottom {
+            100% {
+                right: 100vw;
+                top: 100vh;
+                transform: scale(.3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes die_ball_right_bottom {
+            100% {
+                left: 100vw;
+                top: 100vh;
+                transform: scale(.3);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="container" class="rainbow"></div>
+<div id="init_container">
+    <div class="ball ball_left_top"></div>
+    <div class="ball ball_right_top"></div>
+    <div class="ball ball_left_bottom"></div>
+    <div class="ball ball_right_bottom"></div>
+    <div class="name rainbow">
+        <div class="descriptions">
+            <div>something</div>
+            <div>to</div>
+            <div>talk</div>
+        </div>
+    </div>
+</div>
+<a class="provider_sign" href="https://beian.miit.gov.cn/" target="_blank">备案号: 渝ICP备2021001683号-5</a>
+<script>
+    const nameElem = document.getElementsByClassName('name')[0]
+    const init_containerElem = document.getElementById('init_container')
+    const addDie = function () {
+        init_containerElem.classList.add('die')
+        nameElem.removeEventListener("click", addDie)
+    }
+    nameElem.onclick = addDie
+</script>
+</body>
+</html>
